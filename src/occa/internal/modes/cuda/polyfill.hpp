@@ -16,6 +16,7 @@
 namespace occa {
   //---[ Types ]------------------------
   struct _CUdeviceptr {};
+  struct CUuuid { char bytes[16]; };
   typedef struct _CUcontext*            CUcontext;
   typedef int                           CUdevice;
   typedef struct _CUdeviceptr*          CUdeviceptr;
@@ -157,6 +158,10 @@ namespace occa {
   }
 
   inline CUresult cuDeviceTotalMem(size_t *bytes, CUdevice dev) {
+    return OCCA_CUDA_IS_NOT_ENABLED;
+  }
+
+  inline CUresult cuDeviceGetUuid(CUuuid *uuid, CUdevice dev) {
     return OCCA_CUDA_IS_NOT_ENABLED;
   }
 

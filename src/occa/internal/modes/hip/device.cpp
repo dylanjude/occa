@@ -71,7 +71,21 @@ namespace occa {
 
     hash_t device::hash() const {
       if (!hash_.initialized) {
-        hash_ = occa::hash(arch);
+#if !defined(HIP_VERSION) || (HIP_VERSION >= 50200000)
+        hipUUID uuid;
+        OCCA_HIP_ERROR("Getting device UUID",
+                       hipDeviceGetUuid(&uuid, hipDevice));
+
+        hash_ = (occa::hash(arch)
+                 ^ occa::hash(uuid.bytes, sizeof(uuid.bytes)));
+#else
+        char pciId[64] = {0};
+        OCCA_HIP_ERROR("Getting device PCI bus ID",
+                       hipDeviceGetPCIBusId(pciId, sizeof(pciId), hipDevice));
+
+        hash_ = (occa::hash(arch)
+                 ^ occa::hash(std::string(pciId)));
+#endif
       }
       return hash_;
     }

@@ -17,6 +17,7 @@
 // are indistinguisable inside the occa namespace
 namespace occa {
   //---[ Types ]------------------------
+  struct hipUUID { char bytes[16]; };
   typedef struct _hipCtx_t*               hipCtx_t;
   typedef int                             hipDevice_t;
   typedef void*                           hipDeviceptr_t;
@@ -204,6 +205,10 @@ namespace occa {
   }
 
   inline hipError_t hipMemGetInfo(size_t *free, size_t *total) {
+    return OCCA_HIP_IS_NOT_ENABLED;
+  }
+
+  inline hipError_t hipDeviceGetUuid(hipUUID *uuid, hipDevice_t dev) {
     return OCCA_HIP_IS_NOT_ENABLED;
   }
 

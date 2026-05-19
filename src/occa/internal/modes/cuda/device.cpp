@@ -82,7 +82,13 @@ namespace occa {
         std::stringstream ss;
         ss << "major: " << archMajorVersion << ' '
            << "minor: " << archMinorVersion;
-        hash_ = occa::hash(ss.str());
+
+        CUuuid uuid;
+        OCCA_CUDA_ERROR("Getting device UUID",
+                        cuDeviceGetUuid(&uuid, cuDevice));
+
+        hash_ = (occa::hash(ss.str())
+                 ^ occa::hash(uuid.bytes, sizeof(uuid.bytes)));
       }
       return hash_;
     }
