@@ -335,6 +335,22 @@ namespace occa {
     udim_t memorySize() const;
 
     /**
+     * @startDoc{memoryFree}
+     *
+     * Description:
+     *   Finds how much device memory is currently free, accounting for
+     *   allocations made outside of OCCA. For host-based backends (Serial,
+     *   OpenMP) this reports system-wide free memory, not a per-process
+     *   budget.
+     *
+     * Description:
+     *   Returns the free memory in bytes.
+     *
+     * @endDoc
+     */
+    udim_t memoryFree() const;
+
+    /**
      * @startDoc{memoryAllocated}
      *
      * Description:

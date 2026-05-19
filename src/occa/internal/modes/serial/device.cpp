@@ -477,6 +477,10 @@ namespace occa {
     udim_t device::memorySize() const {
       return sys::SystemInfo::load().memory.total;
     }
+
+    udim_t device::memoryFree() const {
+      return sys::SystemInfo::load().memory.available;
+    }
     //==================================
 
     void* device::unwrap() {

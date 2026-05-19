@@ -37,6 +37,14 @@ namespace occa {
       return bytes;
     }
 
+    udim_t getDeviceMemoryFree() {
+      size_t freeBytes = 0;
+      size_t totalBytes = 0;
+      OCCA_HIP_ERROR("Finding free memory on device",
+                     hipMemGetInfo(&freeBytes, &totalBytes));
+      return freeBytes;
+    }
+
     std::string getVersion() {
       std::stringstream ss;
       int driverVersion = 0;

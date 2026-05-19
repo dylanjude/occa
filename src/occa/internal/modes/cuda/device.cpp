@@ -446,6 +446,12 @@ namespace occa {
     udim_t device::memorySize() const {
       return cuda::getDeviceMemorySize(cuDevice);
     }
+
+    udim_t device::memoryFree() const {
+      OCCA_CUDA_ERROR("Device: Setting Context",
+                      cuCtxSetCurrent(cuContext));
+      return cuda::getDeviceMemoryFree();
+    }
     //==================================
 
     void* device::unwrap() {

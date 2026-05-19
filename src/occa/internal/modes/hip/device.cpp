@@ -419,6 +419,12 @@ namespace occa {
     udim_t device::memorySize() const {
       return hip::getDeviceMemorySize(hipDevice);
     }
+
+    udim_t device::memoryFree() const {
+      OCCA_HIP_ERROR("Device: Setting Device",
+                     hipSetDevice(deviceID));
+      return hip::getDeviceMemoryFree();
+    }
     //==================================
 
     void* device::unwrap() {

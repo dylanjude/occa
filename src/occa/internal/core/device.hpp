@@ -121,6 +121,8 @@ namespace occa {
     virtual modeMemoryPool_t* createMemoryPool(const occa::json &props)=0;
 
     virtual udim_t memorySize() const = 0;
+
+    virtual udim_t memoryFree() const { return 0; }
     //  |===============================
 
     virtual void* unwrap() = 0;

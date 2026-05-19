@@ -233,6 +233,13 @@ namespace occa {
     return 0;
   }
 
+  udim_t device::memoryFree() const {
+    if (modeDevice) {
+      return modeDevice->memoryFree();
+    }
+    return 0;
+  }
+
   udim_t device::memoryAllocated() const {
     if (modeDevice) {
       return modeDevice->bytesAllocated;

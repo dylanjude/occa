@@ -17,6 +17,7 @@ namespace occa {
     int getDeviceCount();
     CUdevice getDevice(const int id);
     udim_t getDeviceMemorySize(CUdevice device);
+    udim_t getDeviceMemoryFree();
 
     std::string getVersion();
 

@@ -4,13 +4,26 @@
 void testProperties();
 void testWrapMemory();
 void testUnwrap();
+void testMemoryStats();
 
 int main(const int argc, const char **argv) {
   testProperties();
   testWrapMemory();
   testUnwrap();
+  testMemoryStats();
 
   return 0;
+}
+
+void testMemoryStats() {
+  occa::device device({{"mode", "Serial"}});
+
+  const occa::udim_t total = device.memorySize();
+  const occa::udim_t free  = device.memoryFree();
+
+  ASSERT_GT(total, (occa::udim_t) 0);
+  ASSERT_GT(free,  (occa::udim_t) 0);
+  ASSERT_LE(free,  total);
 }
 
 void testProperties() {

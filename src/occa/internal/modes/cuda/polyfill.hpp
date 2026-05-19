@@ -187,6 +187,10 @@ namespace occa {
     return OCCA_CUDA_IS_NOT_ENABLED;
   }
 
+  inline CUresult cuMemGetInfo(size_t *free, size_t *total) {
+    return OCCA_CUDA_IS_NOT_ENABLED;
+  }
+
   inline CUresult cuMemAllocHost(void **pp, size_t bytesize) {
     return OCCA_CUDA_IS_NOT_ENABLED;
   }

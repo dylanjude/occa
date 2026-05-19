@@ -44,6 +44,14 @@ namespace occa {
       return bytes;
     }
 
+    udim_t getDeviceMemoryFree() {
+      size_t freeBytes = 0;
+      size_t totalBytes = 0;
+      OCCA_CUDA_ERROR("Finding free memory on device",
+                      cuMemGetInfo(&freeBytes, &totalBytes));
+      return freeBytes;
+    }
+
     std::string getVersion() {
       std::stringstream ss;
       ss << ((int) (CUDA_VERSION / 1000))
