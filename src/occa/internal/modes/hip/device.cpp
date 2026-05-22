@@ -61,6 +61,11 @@ namespace occa {
       kernelProps["compiler_flags"] = compilerFlags;
 
       arch = getDeviceArch(deviceID);
+
+      hipDeviceProp_t hipProps;
+      OCCA_HIP_ERROR("Device: Getting Device Properties",
+                     hipGetDeviceProperties(&hipProps, deviceID));
+      name = std::string(hipProps.name);
     }
 
     device::~device() { }

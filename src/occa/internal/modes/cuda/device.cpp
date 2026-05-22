@@ -61,6 +61,11 @@ namespace occa {
 
       getDeviceArchVersion(cuDevice, archMajorVersion, archMinorVersion);
       arch = getDeviceArch(cuDevice);
+
+      char deviceName[1024];
+      OCCA_CUDA_ERROR("Device: Getting Device Name",
+                      cuDeviceGetName(deviceName, 1024, cuDevice));
+      name = std::string(deviceName);
     }
 
     device::~device() {

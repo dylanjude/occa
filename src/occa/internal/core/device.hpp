@@ -11,6 +11,7 @@ namespace occa {
    public:
     std::string mode;
     std::string arch;
+    std::string name;
     occa::json properties;
     bool needsLauncherKernel;
 

@@ -183,6 +183,13 @@ namespace occa {
             : noArch);
   }
 
+  const std::string& device::name() const {
+    static const std::string noName = "No Name";
+    return (modeDevice
+            ? modeDevice->name
+            : noName);
+  }
+
   const occa::json& device::kernelProperties() const {
     assertInitialized();
     return (const occa::json&) modeDevice->properties["kernel"];

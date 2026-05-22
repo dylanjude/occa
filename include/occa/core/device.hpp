@@ -297,6 +297,21 @@ namespace occa {
      */
     const std::string& arch() const;
 
+    /**
+     * @startDoc{name}
+     *
+     * Description:
+     *   Returns a human-readable name for the physical device.
+     *   For GPU backends this is the product name (e.g. "NVIDIA RTX A4000").
+     *   For host-based backends this returns "CPU".
+     *
+     * Returns:
+     *   The device name string.
+     *
+     * @endDoc
+     */
+    const std::string& name() const;
+
     const occa::json& kernelProperties() const;
     occa::json kernelProperties(const occa::json &additionalProps) const;
 

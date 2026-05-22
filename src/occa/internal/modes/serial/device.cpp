@@ -17,6 +17,7 @@ namespace occa {
       occa::modeDevice_t(properties_) {
       // TODO: Maybe theres something more descriptive we can populate here
       arch = std::string("CPU");
+      name = std::string("CPU");
     }
 
     bool device::hasSeparateMemorySpace() const {
