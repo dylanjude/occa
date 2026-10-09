@@ -84,16 +84,20 @@ namespace occa {
 
     hash_t device::hash() const {
       if (!hash_.initialized) {
+        // Only the compute capability (major.minor) is hashed here, NOT the
+        // per-device UUID.  A cubin is compiled for a target architecture
+        // (sm_XX) and is valid for every GPU of that architecture, so the
+        // kernel cache must be keyed on the architecture alone.  Folding in the
+        // per-physical-GPU UUID (cuDeviceGetUuid) makes the hash differ across
+        // ranks that are each bound to a different GPU -- the usual setup on a
+        // multi-GPU node (e.g. one GPU per MPI rank on a Cray) -- which
+        // prevents ranks from sharing a cache and yields different hashes for
+        // identical OKL source.  See device::setupKernelInfo().
         std::stringstream ss;
         ss << "major: " << archMajorVersion << ' '
            << "minor: " << archMinorVersion;
 
-        CUuuid uuid;
-        OCCA_CUDA_ERROR("Getting device UUID",
-                        cuDeviceGetUuid(&uuid, cuDevice));
-
-        hash_ = (occa::hash(ss.str())
-                 ^ occa::hash(uuid.bytes, sizeof(uuid.bytes)));
+        hash_ = occa::hash(ss.str());
       }
       return hash_;
     }

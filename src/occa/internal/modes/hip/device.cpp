@@ -76,21 +76,12 @@ namespace occa {
 
     hash_t device::hash() const {
       if (!hash_.initialized) {
-#if !defined(HIP_VERSION) || (HIP_VERSION >= 50200000)
-        hipUUID uuid;
-        OCCA_HIP_ERROR("Getting device UUID",
-                       hipDeviceGetUuid(&uuid, hipDevice));
-
-        hash_ = (occa::hash(arch)
-                 ^ occa::hash(uuid.bytes, sizeof(uuid.bytes)));
-#else
-        char pciId[64] = {0};
-        OCCA_HIP_ERROR("Getting device PCI bus ID",
-                       hipDeviceGetPCIBusId(pciId, sizeof(pciId), hipDevice));
-
-        hash_ = (occa::hash(arch)
-                 ^ occa::hash(std::string(pciId)));
-#endif
+        // Only the device architecture is hashed, NOT the per-GPU UUID/PCI bus
+        // ID, so the kernel hash stays identical across ranks that each bind to
+        // a different physical GPU of the same architecture (the usual setup on
+        // a multi-GPU node, e.g. one GPU per MPI rank on a Cray).  See the
+        // note in cuda::device::hash().
+        hash_ = occa::hash(arch);
       }
       return hash_;
     }
